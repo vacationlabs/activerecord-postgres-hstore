@@ -20,7 +20,11 @@ module ActiveRecord
       end
 
       def load(hstore)
-        hstore.nil? ? @default : from_hstore(hstore)
+        unless hstore.nil?
+          hstore.is_a?(Hash) ? hstore : from_hstore(hstore)
+        else
+          @default
+        end
       end
 
       private
